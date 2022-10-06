@@ -1,0 +1,44 @@
+{
+    "license": "UNLICENSED",
+    "type": "commonjs",
+    "scripts": {
+        "build": "tsc --pretty --project tsconfig.tests.json --watch",
+        "build:tsc-alias": "tsc-alias -p tsconfig.json -w",
+        "test": "yarn --silent hardhat test --bail",
+        "test:watch": "nodemon -w test -w contracts -e js,sol --delay 1000ms --exec yarn --silent test",
+        "flatten": "python tools/flatten_all.py",
+        "flatten:watch": "nodemon -w artifacts -e json --delay 1000ms --exec yarn --silent flatten",
+        "genabi": "python tools/generate_abi_typings.py",
+        "genabi:watch": "nodemon -w artifacts -e json --delay 1000ms --exec yarn --silent genabi",
+        "diff": "node tools/diff_openzeppelin.js",
+        "build-local-eslint": "yarn --silent run tsc --pretty --project eslint-local-rules/tsconfig.json"
+    },
+    "devDependencies": {
+        "@nomiclabs/hardhat-ethers": "^2.0.5",
+        "@nomiclabs/hardhat-truffle5": "^2.0.5",
+        "@nomiclabs/hardhat-web3": "^2.0.0",
+        "@openzeppelin/hardhat-upgrades": "^1.16.1",
+        "@types/bn.js": "^5.1.0",
+        "@types/mocha": "^9.1.0",
+        "@types/node": "^17.0.23",
+        "@types/normalize-path": "^3.0.0",
+        "@typescript-eslint/eslint-plugin": "^5.16.0",
+        "@typescript-eslint/parser": "^5.16.0",
+        "chalk": "^4.1.2",
+        "eslint": "^8.6.0",
+        "eslint-plugin-local-rules": "^1.1.0",
+        "ethers": "^5.6.2",
+        "hardhat": "^2.9.2",
+        "hardhat-gas-reporter": "^1.0.8",
+        "nodemon": "^2.0.15",
+        "source-map-support": "^0.5.21",
+        "tsc-alias": "1.6.4",
+        "typescript": "^4.6.3",
+        "web3": "^1.7.1"
+    },
+    "dependencies": {
+        "@openzeppelin/contracts": "^4.5.0",
+        "dotenv": "^16.0.1",
+        "winston": "^3.8.1"
+    }
+}

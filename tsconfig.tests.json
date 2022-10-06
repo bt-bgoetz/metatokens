@@ -1,0 +1,21 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions" : {
+        "noEmit": false,
+        "declaration": false,
+        "typeRoots": [
+            "./node_modules/**/*",
+            "./test/**/*",
+            "./tests/**/*",
+        ],
+    },
+
+    "exclude" : [
+        "node_modules/**/*",
+        "test/**/*",
+        "artifacts/**/*",
+        "cache/**/*",
+        "tools/**/*",
+        "eslint-local-rules/**/*",
+    ]
+}
