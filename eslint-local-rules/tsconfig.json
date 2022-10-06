@@ -1,0 +1,26 @@
+{
+    "extends": "../tsconfig.json",
+
+    "compilerOptions": {
+        "rootDir": ".",
+        "outDir":".",
+        "baseUrl": ".",
+        "typeRoots": [
+            "./**/*",
+        ],
+        
+        "declaration": false,
+        "declarationMap": false,
+        "resolveJsonModule": true,
+        "composite": false,
+        
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "target": "es2017",
+        "lib": ["es2017"],
+    },
+    "exclude" : [
+        "node_modules/**/*",
+        "./**/*.js",
+    ],
+}

@@ -1,0 +1,8 @@
+node_modules
+artifacts
+cache
+contracts
+flattened
+test
+*.js
+.env
