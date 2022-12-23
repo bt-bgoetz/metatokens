@@ -8,8 +8,7 @@ import {
     ProxyableMetatokenMockMethods,
 } from "~/abi/ProxyableMetatokenMock";
 import { redeployContract } from "~/artifacts";
-import { addressIs, CONSOLE, CONTRACT, expectBNEqual, expectReversion, IT } from "~/utils";
-import { getMetatokenID } from "~/metatokens";
+import { addressIs, CONSOLE, CONTRACT, expectBNEqual, expectReversion, getMetatokenID, IT } from "~/utils";
 import {
     decodeProxiedCallResult,
     encodeFunctionCalldata,
@@ -79,6 +78,7 @@ function test_simpleView(accounts : Address[]) {
         CAT_HAS_HOOK_META_TRANSFER;
 
     before(async () => {
+        CONSOLE.log(new Interface(ERC1155MMockABI).getSighash("proxyMetatokenCall"));
         erc1155mInstance = await redeployContract<ERC1155MMockArtifact>(
             "ERC1155MMock",
             {

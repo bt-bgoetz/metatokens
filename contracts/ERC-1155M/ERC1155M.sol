@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: UNLICENSED
 
 pragma solidity ^0.8.13;
 
@@ -19,7 +19,6 @@ error NoRegisteredMetatoken();
 error NotApprovedForTransfer();
 error NotValidMetatoken();
 error NotAllowedMetatokenSelector();
-error NonZeroHooksRequired();
 
 // Metatoken Errors
 error AddressMismatch();
@@ -258,9 +257,6 @@ contract ERC1155M is ERC1155SupplyNE, IERC1155M, ReentrancyGuard {
         }
         if (!_metatokenStatusIs(status, M_STATUS_ENABLED)) {
             revert MetatokenNotEnabled();
-        }
-        if (enabledHooks == 0) {
-            revert NonZeroHooksRequired();
         }
 
         uint16 currentHooks = details.hooks;

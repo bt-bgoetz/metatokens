@@ -235,10 +235,7 @@ export async function expectReversion<ABI extends Record<string, any>, Method ex
         await instance[method](...args, { from });
     } catch (error) {
         const { message } = error as { message? : string };
-        if (
-            message === "VM Exception while processing transaction: reverted with an unrecognized custom error" ||
-            message === "Returned error: VM Exception while processing transaction: revert with unrecognized return data or custom error"
-        ) {
+        if (message === "VM Exception while processing transaction: reverted with an unrecognized custom error") {
             // We can't parse unrecognized errors, so consider them to be a true condition.
             if (revertReason !== undefined) {
                 CONSOLE.warn(`Got unrecognized custom error instead of: ${revertReason}`);
@@ -253,7 +250,6 @@ export async function expectReversion<ABI extends Record<string, any>, Method ex
             assert.isOk(true);
             return;
         } else if (revertReason !== undefined && message !== undefined && !message.includes(revertReason)) {
-            CONSOLE.log("REVERT REASON", message);
             assert.equal(message, revertReason);
             return;
         } else {
@@ -388,4 +384,32 @@ function getReceiptEvents<Events, E extends keyof Events & string>(
 
 function isDeployedContract(contract : any) : contract is DeployedContract {
     return contract.address !== undefined;
+}
+
+
+export const TOKEN_ADDRESS_SHIFT = 96;
+export const TOKEN_ADDRESS_MASK = BigNumber.from("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000000000000000");
+export const TOKEN_ID_MASK = BigNumber.from("0x0000000000000000000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF");
+
+const MAX_UINT256 = BigNumber.from(2)
+    .pow(256)
+    .sub(1);
+const MAX_NFT_ID = BigNumber.from(2)
+    .pow(96)
+    .sub(1);
+
+/** Returns the metatoken token ID for the given metatoken category and NFT ID. */
+export function getMetatokenID(address : Address, nft : BigNumber | number) {
+    nft = BigNumber.from(nft);
+    if (nft.gt(MAX_NFT_ID)) {
+        throw new Error("NFT ID too large!");
+    }
+
+    const id = nft.add(BigNumber.from(address).shl(TOKEN_ADDRESS_SHIFT));
+
+    if (id.gt(MAX_UINT256)) {
+        throw new Error("ID overflow!");
+    }
+
+    return id;
 }

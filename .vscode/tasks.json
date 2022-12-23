@@ -1,0 +1,156 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build",
+			"dependsOn": [
+				"test:watch",
+				"tsc:watch",
+				"tsc:alias:watch",
+				"flatten:watch",
+				"genabi:watch"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+
+		{
+			"label": "test:watch",
+			"type": "npm",
+			"script": "test:watch",
+			"isBackground": true,
+			"problemMatcher": {
+				"base": "$tsc-watch",
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "\\[nodemon\\] (re)?starting",
+					"endsPattern": "\\[nodemon\\] (clean exit|app crashed)"
+				}
+			},
+			"presentation": {
+				"reveal": "always",
+				"focus": true,
+				"panel": "shared",
+				"clear": true
+			}
+		},
+
+		{
+			"label": "tsc:watch",
+			"type": "npm",
+			"script": "build",
+			"isBackground": true,
+			"problemMatcher": {
+				"base": "$tsc-watch",
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "File change detected\\. Starting incremental compilation\\.{3}",
+					"endsPattern": "Found \\d+ errors?\\. Watching for file changes\\."
+				}
+			},
+			"presentation": {
+				"panel": "shared",
+				"clear": true,
+				"group": "build-scripts"
+			}
+		},
+		{
+			"label": "tsc:alias:watch",
+			"type": "npm",
+			"script": "build:tsc-alias",
+			"isBackground": true,
+			"problemMatcher": {
+				"base": "$tsc-watch",
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "File change detected\\. Starting incremental compilation\\.{3}",
+					"endsPattern": "Watching for file changes..."
+				}
+			},
+			"presentation": {
+				"panel": "shared",
+				"clear": true,
+				"group": "build-scripts"
+			}
+		},
+		{
+			"label": "flatten:watch",
+			"type": "npm",
+			"script": "flatten:watch",
+			"isBackground": true,
+			"problemMatcher": {
+				"base": "$tsc-watch",
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "\\[nodemon\\] (re)?starting",
+					"endsPattern": "\\[nodemon\\] (clean exit|app crashed)"
+				}
+			},
+			"presentation": {
+				"panel": "shared",
+				"clear": true,
+				"group": "build-scripts",
+			}
+		},
+		{
+			"label": "genabi:watch",
+			"type": "npm",
+			"script": "genabi:watch",
+			"isBackground": true,
+			"problemMatcher": {
+				"base": "$tsc-watch",
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "\\[nodemon\\] (re)?starting",
+					"endsPattern": "\\[nodemon\\] (clean exit|app crashed)"
+				}
+			},
+			"presentation": {
+				"panel": "shared",
+				"clear": true,
+				"group": "build-scripts",
+			}
+		},
+
+		{
+			"label": "eslint:all",
+			"type": "npm",
+			"script": "lint",
+			"problemMatcher": [
+				"$eslint-stylish"
+			]
+		},
+		{
+			"label": "build-local-eslint",
+			"type": "npm",
+			"script": "build-local-eslint",
+			"problemMatcher": [
+				"$tsc-watch"
+			]
+		},
+		{
+			"label": "organize:imports",
+			"command": "${input:organize-imports}",
+			"problemMatcher": []
+		},
+		{
+			"label": "lint:fix:current",
+			"command": "${input:lint-fix}",
+			"problemMatcher": []
+		},
+	],
+	"inputs": [
+		{
+			"id": "organize-imports",
+			"type": "command",
+			"command": "editor.action.organizeImports"
+		},
+		{
+			"id": "lint-fix",
+			"type": "command",
+			"command": "eslint.executeAutofix"
+		}
+	]
+}

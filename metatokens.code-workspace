@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"solidity.compileUsingRemoteVersion": "v0.8.13+commit.abaa5c0e",
+		"VsCodeTaskButtons.tasks": [
+			{
+				"label": "organize:imports",
+				"task": "organize:imports",
+			},
+			{
+				"label": "lint:fix current",
+				"task": "lint:fix:current",
+			}
+		]
+	}
+}

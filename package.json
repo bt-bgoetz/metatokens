@@ -11,7 +11,13 @@
         "genabi": "python tools/generate_abi_typings.py",
         "genabi:watch": "nodemon -w artifacts -e json --delay 1000ms --exec yarn --silent genabi",
         "diff": "node tools/diff_openzeppelin.js",
-        "build-local-eslint": "yarn --silent run tsc --pretty --project eslint-local-rules/tsconfig.json"
+        "build-local-eslint": "yarn --silent run tsc --pretty --project eslint-local-rules/tsconfig.json",
+        "script:tsc-alias": "tsc-alias -r ./scripts/tsc-alias-replacer.js -f -w -p tsconfig.other.json --dir scripts",
+        "script:deploy": "hardhat run scripts/deployWIVCore.js",
+        "script:mint-core": "hardhat run scripts/mintWIVCore.js",
+        "script:mint-wivx": "hardhat run scripts/mintWIVX.js",
+        "script:upgrade-core": "hardhat run scripts/upgradeWIVCore.js",
+        "script:upgrade-wivx": "hardhat run scripts/upgradeWIVX.js"
     },
     "devDependencies": {
         "@nomiclabs/hardhat-ethers": "^2.0.5",

@@ -1,14 +1,10 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: UNLICENSED
 
 pragma solidity ^0.8.13;
 
 import "../ERC-1155M/ERC1155M.sol";
 
 contract ERC1155MMock is ERC1155M {
-    // List of registered ERC-20 emulators that have full control over
-    // transferring their respective tokens.
-    mapping(uint256 => address) _emulatorTokens;
-
     constructor(string memory uri) {
         _setURI(uri);
     }
@@ -36,15 +32,6 @@ contract ERC1155MMock is ERC1155M {
             metatoken,
             enabled
         );
-    }
-
-    /**
-     * @dev Register a new ERC-20 emulator.
-     * This is a non-functioning example, as this would need to be patched into ERC1155SupplyNE
-     * as that is where approvals are checked.
-     */
-    function registerEmulator(address emulator, uint256 token) external {
-        _emulatorTokens[token] = emulator;
     }
 
     /**
@@ -122,34 +109,5 @@ contract ERC1155MMock is ERC1155M {
         array[0] = element;
 
         return array;
-    }
-
-    /**
-     * @dev See {IERC1155-safeTransferFrom}.
-     */
-    function safeTransferFrom(
-        address from,
-        address to,
-        uint256 id,
-        uint256 amount,
-        bytes memory data
-    ) public virtual override {
-        if (
-            // Must be sender
-            from != msg.sender &&
-            // Or must be emulator
-            _emulatorTokens[id] != msg.sender &&
-            // Or must be approved
-            !isApprovedForAll(from, msg.sender)
-        ) {
-            revert NotApprovedForTransfer();
-        }
-
-        uint256[] memory ids = new uint[](1);
-        ids[0] = id;
-        uint256[] memory amounts = new uint[](1);
-        amounts[0] = amount;
-
-        _transferTokens(from, to, ids, amounts, data);
     }
 }
